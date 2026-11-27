@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" fill="none" role="img" aria-label="Kubernetes rolling deploy 502 race condition versus preStop graceful shutdown">
+  <rect x="1" y="1" width="758" height="358" rx="14" fill="#FFFFFF" stroke="#E4E4DF" stroke-width="1.5"/>
+  <path d="M1 15C1 7.268 7.268 1 15 1H745C752.732 1 759 7.268 759 15V42H1V15Z" fill="#F4F4F1"/>
+  <line x1="1" y1="42" x2="759" y2="42" stroke="#E4E4DF" stroke-width="1"/>
+  <text x="24" y="26" font-family="Figtree, ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="700" fill="#18181B">Rolling Update 502 Race Condition vs. Graceful Shutdown Fix</text>
+  <text x="736" y="26" text-anchor="end" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10.5" font-weight="600" fill="#2558D9">Kubernetes · preStop</text>
+
+  <!-- Left Panel: BROKEN (Race Condition) -->
+  <rect x="22" y="58" width="350" height="280" rx="10" fill="#FEF8F8" stroke="#F4D3D3" stroke-width="1.2"/>
+  <rect x="34" y="70" width="164" height="24" rx="6" fill="#FEE2E2"/>
+  <text x="44" y="86" font-family="Figtree, ui-sans-serif, sans-serif" font-size="11.5" font-weight="700" fill="#B91C1C">WITHOUT preStop (502s)</text>
+
+  <!-- Timeline steps Left -->
+  <rect x="34" y="108" width="326" height="38" rx="7" fill="#FFFFFF" stroke="#E4E4DF"/>
+  <text x="46" y="124" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10.5" font-weight="700" fill="#18181B">t = 0.0s  Pod marked Terminating</text>
+  <text x="46" y="138" font-family="Figtree, ui-sans-serif, sans-serif" font-size="10.5" fill="#6C6C78">API server triggers TWO async paths in parallel</text>
+
+  <!-- Fork arrows -->
+  <line x1="115" y1="146" x2="115" y2="168" stroke="#DC2626" stroke-width="1.8"/>
+  <line x1="278" y1="146" x2="278" y2="168" stroke="#D97706" stroke-width="1.8"/>
+
+  <rect x="34" y="168" width="156" height="58" rx="7" fill="#FFFFFF" stroke="#FCA5A5"/>
+  <text x="44" y="185" font-family="Figtree, ui-sans-serif, sans-serif" font-size="11" font-weight="700" fill="#B91C1C">1. kubelet (Fast)</text>
+  <text x="44" y="201" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.5" fill="#52525B">t=0.1s SIGTERM sent</text>
+  <text x="44" y="216" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.5" fill="#B91C1C">App closes :8080</text>
+
+  <rect x="202" y="168" width="158" height="58" rx="7" fill="#FFFFFF" stroke="#FCD34D"/>
+  <text x="212" y="185" font-family="Figtree, ui-sans-serif, sans-serif" font-size="11" font-weight="700" fill="#B45309">2. kube-proxy / LB</text>
+  <text x="212" y="201" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.5" fill="#52525B">t=1.5s EndpointSlice</text>
+  <text x="212" y="216" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.5" fill="#B45309">still sends traffic!</text>
+
+  <!-- Result box Left -->
+  <rect x="34" y="246" width="326" height="76" rx="8" fill="#FEE2E2" stroke="#F87171"/>
+  <text x="48" y="268" font-family="Figtree, ui-sans-serif, sans-serif" font-size="12" font-weight="700" fill="#991B1B">Collision Window (t = 0.1s → 1.5s)</text>
+  <text x="48" y="287" font-family="Figtree, ui-sans-serif, sans-serif" font-size="11" fill="#7F1D1D">Ingress/Envoy routes live requests to dead socket</text>
+  <text x="48" y="305" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10.5" font-weight="700" fill="#B91C1C">Result: Connection Refused → HTTP 502 bursts!</text>
+
+  <!-- Right Panel: FIXED (Graceful Drain) -->
+  <rect x="388" y="58" width="350" height="280" rx="10" fill="#F4F7FE" stroke="#D1DFFC" stroke-width="1.2"/>
+  <rect x="400" y="70" width="222" height="24" rx="6" fill="#2558D9"/>
+  <text x="410" y="86" font-family="Figtree, ui-sans-serif, sans-serif" font-size="11.5" font-weight="700" fill="#FFFFFF">WITH preStop: sleep 10 (0% 502)</text>
+
+  <rect x="400" y="108" width="326" height="38" rx="7" fill="#FFFFFF" stroke="#D1DFFC"/>
+  <text x="412" y="124" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10.5" font-weight="700" fill="#18181B">t = 0.0s  Pod marked Terminating</text>
+  <text x="412" y="138" font-family="Figtree, ui-sans-serif, sans-serif" font-size="10.5" fill="#6C6C78">preStop runs BEFORE SIGTERM; app stays alive</text>
+
+  <line x1="482" y1="146" x2="482" y2="168" stroke="#2558D9" stroke-width="1.8"/>
+  <line x1="644" y1="146" x2="644" y2="168" stroke="#2558D9" stroke-width="1.8"/>
+
+  <rect x="400" y="168" width="156" height="58" rx="7" fill="#FFFFFF" stroke="#BFDBFE"/>
+  <text x="410" y="185" font-family="Figtree, ui-sans-serif, sans-serif" font-size="11" font-weight="700" fill="#1E40AF">1. preStop Hook</text>
+  <text x="410" y="201" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.5" fill="#52525B">sleep 10 executes</text>
+  <text x="410" y="216" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.5" fill="#2558D9">App serves in-flight</text>
+
+  <rect x="568" y="168" width="158" height="58" rx="7" fill="#FFFFFF" stroke="#BFDBFE"/>
+  <text x="578" y="185" font-family="Figtree, ui-sans-serif, sans-serif" font-size="11" font-weight="700" fill="#1E40AF">2. LB / eBPF Sync</text>
+  <text x="578" y="201" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.5" fill="#52525B">t=1.5s IP removed</text>
+  <text x="578" y="216" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.5" fill="#2558D9">0 new reqs arrive</text>
+
+  <rect x="400" y="246" width="326" height="76" rx="8" fill="#EFF4FF" stroke="#93B4FA"/>
+  <text x="414" y="268" font-family="Figtree, ui-sans-serif, sans-serif" font-size="12" font-weight="700" fill="#1E3A8A">t = 10.0s → SIGTERM Sent Cleanly</text>
+  <text x="414" y="287" font-family="Figtree, ui-sans-serif, sans-serif" font-size="11" fill="#1E40AF">Server finishes active requests &amp; exits 0 gracefully</text>
+  <text x="414" y="305" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#2558D9">terminationGracePeriodSeconds: 45 (&gt; sleep + drain)</text>
+</svg>

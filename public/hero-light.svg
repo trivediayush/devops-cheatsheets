@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 380" fill="none" role="img" aria-label="DevOps platform architecture and command reference preview">
+  <defs>
+    <pattern id="grid-light" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#E4E4DF" stroke-width="0.8"/>
+    </pattern>
+  </defs>
+
+  <!-- Outer architectural frame -->
+  <rect x="1" y="1" width="518" height="378" rx="16" fill="#FFFFFF" stroke="#E4E4DF" stroke-width="1.5"/>
+  <rect x="2" y="2" width="516" height="376" rx="15" fill="url(#grid-light)" opacity="0.55"/>
+
+  <!-- Top window bar -->
+  <path d="M1 17C1 8.163 8.163 1 17 1H503C511.837 1 519 8.163 519 17V44H1V17Z" fill="#F4F4F1"/>
+  <line x1="1" y1="44" x2="519" y2="44" stroke="#E4E4DF" stroke-width="1"/>
+  <circle cx="22" cy="22.5" r="4.5" fill="#D4D4CE"/>
+  <circle cx="38" cy="22.5" r="4.5" fill="#D4D4CE"/>
+  <circle cx="54" cy="22.5" r="4.5" fill="#D4D4CE"/>
+  <text x="260" y="26.5" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11.5" font-weight="600" fill="#6C6C78">devops-stack · production-ops</text>
+
+  <!-- Section 1: Delivery Pipeline Topology -->
+  <rect x="24" y="62" width="472" height="106" rx="12" fill="#FFFFFF" stroke="#E4E4DF" stroke-width="1.2"/>
+  <text x="40" y="84" font-family="Figtree, ui-sans-serif, system-ui, sans-serif" font-size="11.5" font-weight="600" fill="#6C6C78">Delivery workflow</text>
+  <text x="480" y="84" text-anchor="end" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10.5" font-weight="500" fill="#2558D9">CI/CD → K8s</text>
+
+  <!-- Connector line -->
+  <line x1="88" y1="124" x2="432" y2="124" stroke="#D5DAE8" stroke-width="2"/>
+  <line x1="88" y1="124" x2="316" y2="124" stroke="#2558D9" stroke-width="2.2"/>
+
+  <!-- Node 1: Git -->
+  <rect x="40" y="102" width="88" height="44" rx="9" fill="#F7F7F5" stroke="#E4E4DF" stroke-width="1.2"/>
+  <circle cx="57" cy="124" r="4" fill="#2558D9"/>
+  <text x="68" y="120.5" font-family="Figtree, ui-sans-serif, system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#18181B">GitOps</text>
+  <text x="68" y="134.5" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.5" fill="#6C6C78">PR · Tag</text>
+
+  <!-- Node 2: Build -->
+  <rect x="148" y="102" width="100" height="44" rx="9" fill="#F7F7F5" stroke="#E4E4DF" stroke-width="1.2"/>
+  <circle cx="164" cy="124" r="4" fill="#2558D9"/>
+  <text x="175" y="120.5" font-family="Figtree, ui-sans-serif, system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#18181B">Build</text>
+  <text x="175" y="134.5" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.5" fill="#6C6C78">OCI · SBOM</text>
+
+  <!-- Node 3: Cluster (Active Focus) -->
+  <rect x="268" y="100" width="102" height="48" rx="10" fill="#2558D9"/>
+  <rect x="278" y="114" width="8" height="8" rx="2" fill="#FFFFFF"/>
+  <rect x="278" y="126" width="8" height="8" rx="2" fill="#BFDBFE"/>
+  <text x="294" y="120.5" font-family="Figtree, ui-sans-serif, system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#FFFFFF">Cluster</text>
+  <text x="294" y="135" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.5" fill="#DBEAFE">Rollout 3/3</text>
+
+  <!-- Node 4: Observe -->
+  <rect x="394" y="102" width="86" height="44" rx="9" fill="#F7F7F5" stroke="#E4E4DF" stroke-width="1.2"/>
+  <circle cx="410" cy="124" r="4" fill="#B45309"/>
+  <text x="421" y="120.5" font-family="Figtree, ui-sans-serif, system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#18181B">OTel</text>
+  <text x="421" y="134.5" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.5" fill="#6C6C78">Metrics</text>
+
+  <!-- Section 2: Command Reference Surface (Left) + Stack Modules (Right) -->
+  <rect x="24" y="184" width="302" height="172" rx="12" fill="#F4F4F1" stroke="#E4E4DF" stroke-width="1.2"/>
+  <text x="40" y="207" font-family="Figtree, ui-sans-serif, system-ui, sans-serif" font-size="11.5" font-weight="600" fill="#6C6C78">Quick commands</text>
+  <line x1="25" y1="218" x2="325" y2="218" stroke="#E4E4DF" stroke-width="1"/>
+
+  <g font-family="JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11.2">
+    <text x="40" y="242" fill="#2558D9" font-weight="700">$</text>
+    <text x="54" y="242" fill="#18181B">kubectl rollout status deploy/api</text>
+
+    <text x="40" y="268" fill="#2558D9" font-weight="700">$</text>
+    <text x="54" y="268" fill="#18181B">terraform plan -out=tfplan</text>
+
+    <text x="40" y="294" fill="#2558D9" font-weight="700">$</text>
+    <text x="54" y="294" fill="#18181B">docker buildx build --push .</text>
+
+    <text x="40" y="320" fill="#2558D9" font-weight="700">$</text>
+    <text x="54" y="320" fill="#18181B">trivy image --severity HIGH app</text>
+
+    <text x="40" y="343" fill="#6C6C78" font-size="10">20 tracks · 120+ cheatsheets · Ctrl+K</text>
+  </g>
+
+  <!-- Right Column: Architectural Domain Index Cards -->
+  <rect x="342" y="184" width="154" height="50" rx="10" fill="#FFFFFF" stroke="#E4E4DF" stroke-width="1.2"/>
+  <rect x="354" y="196" width="26" height="26" rx="7" fill="#EFF4FF" stroke="#D5E2FF" stroke-width="1"/>
+  <path d="M362 205 L368 209 L362 213" stroke="#2558D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="369" y1="213" x2="374" y2="213" stroke="#2558D9" stroke-width="2" stroke-linecap="round"/>
+  <text x="390" y="206" font-family="Figtree, ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700" fill="#18181B">Linux &amp; CLI</text>
+  <text x="390" y="221" font-family="Figtree, ui-sans-serif, system-ui, sans-serif" font-size="10.5" fill="#6C6C78">Daily ops &amp; kernel</text>
+
+  <rect x="342" y="245" width="154" height="50" rx="10" fill="#FFFFFF" stroke="#E4E4DF" stroke-width="1.2"/>
+  <rect x="354" y="257" width="26" height="26" rx="7" fill="#EFF4FF" stroke="#D5E2FF" stroke-width="1"/>
+  <rect x="361" y="264" width="12" height="12" rx="2.5" stroke="#2558D9" stroke-width="1.8"/>
+  <line x1="367" y1="264" x2="367" y2="276" stroke="#2558D9" stroke-width="1.5"/>
+  <text x="390" y="267" font-family="Figtree, ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700" fill="#18181B">Cloud &amp; IaC</text>
+  <text x="390" y="282" font-family="Figtree, ui-sans-serif, system-ui, sans-serif" font-size="10.5" fill="#6C6C78">AWS, Azure, GCP</text>
+
+  <rect x="342" y="306" width="154" height="50" rx="10" fill="#FFFFFF" stroke="#E4E4DF" stroke-width="1.2"/>
+  <rect x="354" y="318" width="26" height="26" rx="7" fill="#FEF3E6" stroke="#F6DEC0" stroke-width="1"/>
+  <path d="M367 324 L373 327 V332 C373 335.5 370.5 337.8 367 339 C363.5 337.8 361 335.5 361 332 V327 L367 324 Z" stroke="#B45309" stroke-width="1.7" stroke-linejoin="round"/>
+  <text x="390" y="328" font-family="Figtree, ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700" fill="#18181B">DevSecOps</text>
+  <text x="390" y="343" font-family="Figtree, ui-sans-serif, system-ui, sans-serif" font-size="10.5" fill="#6C6C78">SAST, SLSA, Vault</text>
+</svg>

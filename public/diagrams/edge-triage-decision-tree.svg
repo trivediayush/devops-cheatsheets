@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" fill="none" role="img" aria-label="SRE first 10 minutes production outage triage decision flowchart">
+  <rect x="1" y="1" width="758" height="298" rx="14" fill="#FFFFFF" stroke="#E4E4DF" stroke-width="1.5"/>
+  <path d="M1 15C1 7.268 7.268 1 15 1H745C752.732 1 759 7.268 759 15V42H1V15Z" fill="#F4F4F1"/>
+  <line x1="1" y1="42" x2="759" y2="42" stroke="#E4E4DF" stroke-width="1"/>
+  <text x="24" y="26" font-family="Figtree, ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="700" fill="#18181B">First-10-Minutes Production Outage Triage Flowchart</text>
+  <text x="736" y="26" text-anchor="end" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10.5" font-weight="600" fill="#2558D9">Mitigate First · Root-Cause Second</text>
+
+  <!-- Step 1 -->
+  <rect x="24" y="66" width="136" height="72" rx="10" fill="#FEE2E2" stroke="#F87171" stroke-width="1.3"/>
+  <text x="92" y="90" text-anchor="middle" font-family="Figtree, ui-sans-serif, sans-serif" font-size="11.5" font-weight="700" fill="#991B1B">1. SLO Burn Alert</text>
+  <text x="92" y="108" text-anchor="middle" font-family="Figtree, ui-sans-serif, sans-serif" font-size="10" fill="#7F1D1D">Scope blast radius:</text>
+  <text x="92" y="123" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.5" fill="#991B1B">1 AZ · 1 route · global?</text>
+
+  <line x1="160" y1="102" x2="188" y2="102" stroke="#2558D9" stroke-width="2"/>
+  <polygon points="188,97 198,102 188,107" fill="#2558D9"/>
+
+  <!-- Step 2 -->
+  <rect x="200" y="66" width="160" height="72" rx="10" fill="#F4F7FE" stroke="#93B4FA" stroke-width="1.3"/>
+  <text x="280" y="90" text-anchor="middle" font-family="Figtree, ui-sans-serif, sans-serif" font-size="11.5" font-weight="700" fill="#1E3A8A">2. Recent Change?</text>
+  <text x="280" y="108" text-anchor="middle" font-family="Figtree, ui-sans-serif, sans-serif" font-size="10" fill="#3B4256">Deploy · Flag · IaC · Cert</text>
+  <text x="280" y="123" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.5" fill="#2558D9">YES → Rollback NOW</text>
+
+  <line x1="360" y1="102" x2="388" y2="102" stroke="#2558D9" stroke-width="2"/>
+  <polygon points="388,97 398,102 388,107" fill="#2558D9"/>
+
+  <!-- Step 3 -->
+  <rect x="400" y="66" width="160" height="72" rx="10" fill="#F7F7F5" stroke="#E4E4DF" stroke-width="1.3"/>
+  <text x="480" y="90" text-anchor="middle" font-family="Figtree, ui-sans-serif, sans-serif" font-size="11.5" font-weight="700" fill="#18181B">3. Isolate Layer</text>
+  <text x="480" y="108" text-anchor="middle" font-family="Figtree, ui-sans-serif, sans-serif" font-size="10" fill="#52525B">Trace (Tempo) + Hubble</text>
+  <text x="480" y="123" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.5" fill="#18181B">Edge · Pod · DNS · DB</text>
+
+  <line x1="560" y1="102" x2="588" y2="102" stroke="#2558D9" stroke-width="2"/>
+  <polygon points="588,97 598,102 588,107" fill="#2558D9"/>
+
+  <!-- Step 4 -->
+  <rect x="600" y="66" width="136" height="72" rx="10" fill="#2558D9"/>
+  <text x="668" y="90" text-anchor="middle" font-family="Figtree, ui-sans-serif, sans-serif" font-size="11.5" font-weight="700" fill="#FFFFFF">4. Mitigate</text>
+  <text x="668" y="108" text-anchor="middle" font-family="Figtree, ui-sans-serif, sans-serif" font-size="10" fill="#DBEAFE">Failover · Shed Load</text>
+  <text x="668" y="123" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.5" fill="#FFFFFF">Restore User SLO</text>
+
+  <!-- Bottom 4 diagnostic branches -->
+  <rect x="24" y="166" width="168" height="108" rx="9" fill="#F7F7F5" stroke="#E4E4DF"/>
+  <text x="36" y="187" font-family="Figtree, ui-sans-serif, sans-serif" font-size="11" font-weight="700" fill="#18181B">Compute / Pods</text>
+  <text x="36" y="205" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.2" fill="#52525B">• OOMKill (Exit 137)</text>
+  <text x="36" y="222" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.2" fill="#52525B">• CFS CPU throttling</text>
+  <text x="36" y="239" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.2" fill="#52525B">• Ephemeral disk full</text>
+  <text x="36" y="256" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.2" fill="#2558D9">kubectl describe/top</text>
+
+  <rect x="205" y="166" width="168" height="108" rx="9" fill="#F7F7F5" stroke="#E4E4DF"/>
+  <text x="217" y="187" font-family="Figtree, ui-sans-serif, sans-serif" font-size="11" font-weight="700" fill="#18181B">Network &amp; DNS</text>
+  <text x="217" y="205" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.2" fill="#52525B">• conntrack table full</text>
+  <text x="217" y="222" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.2" fill="#52525B">• NAT SNAT port limit</text>
+  <text x="217" y="239" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.2" fill="#52525B">• MTU / TLS chain drop</text>
+  <text x="217" y="256" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.2" fill="#2558D9">hubble / dig / openssl</text>
+
+  <rect x="386" y="166" width="168" height="108" rx="9" fill="#F7F7F5" stroke="#E4E4DF"/>
+  <text x="398" y="187" font-family="Figtree, ui-sans-serif, sans-serif" font-size="11" font-weight="700" fill="#18181B">DB &amp; Queues</text>
+  <text x="398" y="205" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.2" fill="#52525B">• Pool saturation</text>
+  <text x="398" y="222" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.2" fill="#52525B">• Lock wait / seq scan</text>
+  <text x="398" y="239" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.2" fill="#52525B">• Kafka rebalance storm</text>
+  <text x="398" y="256" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.2" fill="#2558D9">pg_stat_activity</text>
+
+  <rect x="567" y="166" width="169" height="108" rx="9" fill="#F7F7F5" stroke="#E4E4DF"/>
+  <text x="579" y="187" font-family="Figtree, ui-sans-serif, sans-serif" font-size="11" font-weight="700" fill="#18181B">Auth &amp; Cloud</text>
+  <text x="579" y="205" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.2" fill="#52525B">• Expired cert / JWT</text>
+  <text x="579" y="222" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.2" fill="#52525B">• Quota / rate throttle</text>
+  <text x="579" y="239" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.2" fill="#52525B">• Vault seal / IAM SCP</text>
+  <text x="579" y="256" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9.2" fill="#2558D9">CloudTrail / cmctl</text>
+</svg>
