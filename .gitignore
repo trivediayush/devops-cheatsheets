@@ -3,5 +3,6 @@ node_modules/
 .vitepress/cache/
 *.zip
 .vercel/
+.aistudio/
 .DS_Store
 npm-debug.log*
